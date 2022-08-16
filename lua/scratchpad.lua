@@ -1,11 +1,8 @@
-P("hallo")
-
 local keymap = vim.api.nvim_set_keymap
 
 keymap("n", "<leader>8", "<cmd>lua RELOAD('scratchpad').do_something()<CR>", {})
 keymap("n", "<leader>9", "<cmd>lua RELOAD('scratchpad').run()<CR>", {})
 keymap("n", "<leader>ft", "<cmd>Telescope help_tags<CR>", {})
-
 
 local M = {}
 
@@ -14,16 +11,11 @@ local TEMPLATE_DIR = "$HOME/git/public/scratchpad.nvim/templates"
 M._current_compile_line = "default"
 
 M.do_something = function()
-    --if vim.bo.filetype == "cpp" then
-    --end
-
-    vim.api.nvim_command('tabe ' .. TEMPLATE_DIR .. '/cpp.cpp')
-
-    -- nvim_put
-    -- nvim_set_current_buf
-
-    -- todo set the autocommand on save that it executes
-    -- nvim_buf_get_lines
+    if vim.bo.filetype == "cpp" then
+        vim.api.nvim_command('tabe ' .. TEMPLATE_DIR .. '/cpp.cpp')
+    else
+        print(string.format("The filetype %s is not supported", vim.bo.filetype))
+    end
 end
 
 M.run = function()
